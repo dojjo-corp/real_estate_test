@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class AgentReviewPage extends StatefulWidget {
-  const AgentReviewPage({super.key});
+  const AgentReviewPage({super.key, required this.agentID});
+
+  final String agentID;
 
   @override
   State<AgentReviewPage> createState() => _AgentReviewPageState();

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:real_estate_test/authentication/gates/auth_gate.dart';
+import 'package:real_estate_test/authentication/pages/my_bookings_page.dart';
+import 'package:real_estate_test/authentication/pages/notifications_page.dart';
 import 'package:real_estate_test/authentication/pages/payment/add_card_page.dart';
 import 'package:real_estate_test/authentication/pages/agent_review_page.dart';
+import 'package:real_estate_test/authentication/pages/payment/e_receipt_page.dart';
 import 'package:real_estate_test/authentication/pages/property/book_tour_page.dart';
 import 'package:real_estate_test/authentication/pages/property/booking_page.dart';
+import 'package:real_estate_test/authentication/pages/regular_search_page.dart';
 import 'package:real_estate_test/authentication/pages/user_authentication/complete_profile_page.dart';
 import 'package:real_estate_test/authentication/pages/homepage.dart';
 import 'package:real_estate_test/authentication/pages/user_authentication/login_page.dart';
@@ -45,12 +49,11 @@ class MyApp extends StatelessWidget {
         "/swipe": (context) => const SwipePage(),
         "/listing": (context) => const PropertyListingPage(),
         "/search-map": (context) => const SearchMap(),
-        "/booking": (context) => const BookingPage(),
-        "/property-review": (context) => const PropertyReviewPage(),
-        "/book-tour": (context) => const BookTourPage(),
-        "/agent-review": (context) => const AgentReviewPage(),
-        "/payment": (context) => PaymentPage(),
+        "/regular_search": (context) => const RegularSearchPage(),
+        "/notifications": (context) => const NotificationsPage(),
+        "/my-bookings": (context) => const MyBookingsPage(),
         "/add-card": (context) => const AddCardPage(),
+
       },
       onGenerateRoute: (settings) {
         final name = settings.name;
@@ -64,39 +67,55 @@ class MyApp extends StatelessWidget {
           );
         }
 
-        // todo: Property Details
-        if (name == "/property-detail") {
+        // todo: Property Review
+        if (name == "/property-review") {
           return MaterialPageRoute(
             builder: (context) =>
-                PropertyDetailPage(propertyID: args["property-id"]),
+                PropertyReviewPage(propertyID: args["property-id"]),
           );
         }
 
-        // todo: Property Details
-        if (name == "/property-detail") {
+        // todo: Agent Review
+        if (name == "/agent-review") {
           return MaterialPageRoute(
             builder: (context) =>
-                PropertyDetailPage(propertyID: args["property-id"]),
+                AgentReviewPage(agentID: args["agent-id"]),
           );
         }
 
-        // todo: Property Details
-        if (name == "/property-detail") {
+        // todo: Property Booking
+        if (name == "/booking") {
           return MaterialPageRoute(
             builder: (context) =>
-                PropertyDetailPage(propertyID: args["property-id"]),
+                BookingPage(propertyID: args["property-id"]),
           );
         }
 
-        // todo: Property Details
-        if (name == "/property-detail") {
+        // todo: Book Tour
+        if (name == "/book-tour") {
           return MaterialPageRoute(
             builder: (context) =>
-                PropertyDetailPage(propertyID: args["property-id"]),
+                BookTourPage(propertyID: args["property-id"]),
           );
         }
 
+        // todo: Payment
+        if (name == "/payment") {
+          return MaterialPageRoute(
+            builder: (context) =>
+                PaymentPage(propertyID: args["property-id"]),
+          );
+        }
 
+        // todo: E-Receipt
+        if (name == "/e-receipt") {
+          return MaterialPageRoute(
+            builder: (context) =>
+                EReceiptPage(receiptID: args["receipt-id"]),
+          );
+        }
+
+        // todo: rdirect to homepage 
         return MaterialPageRoute(
           builder: (context) => const MyHomePage(),
         );

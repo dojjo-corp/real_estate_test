@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class BookTourPage extends StatefulWidget {
-  const BookTourPage({super.key});
+  const BookTourPage({super.key, required this.propertyID});
+
+  final String propertyID;
 
   @override
   State<BookTourPage> createState() => _BookTourPageState();

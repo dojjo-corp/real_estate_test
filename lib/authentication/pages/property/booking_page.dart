@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class BookingPage extends StatefulWidget {
-  const BookingPage({super.key});
+  const BookingPage({super.key, required this.propertyID});
+
+  final String propertyID;
 
   @override
   State<BookingPage> createState() => _BookingPageState();
