@@ -17,6 +17,28 @@ class _OnboardingPageState extends State<OnboardingPage> {
     PageOne(imageAssetName: "assets/self_learning_flat_illustration.png")
   ];
 
+  void goToNextPage() {
+    controller.nextPage(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.linear,
+    );
+    if (mounted) {
+      setState(() {});
+    }
+    print(controller.page);
+  }
+
+  void goToPreviousPage() {
+    controller.previousPage(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.linear,
+    );
+    if (mounted) {
+      setState(() {});
+    }
+    print(controller.page);
+  }
+
   @override
   void dispose() {
     controller.dispose();
@@ -27,11 +49,41 @@ class _OnboardingPageState extends State<OnboardingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: AppBar(),
-      body: PageView(
-        controller: controller,
-        pageSnapping: true,
-        scrollDirection: Axis.horizontal,
-        children: pages,
+      body: Stack(
+        children: [
+          PageView(
+            controller: controller,
+            pageSnapping: true,
+            scrollDirection: Axis.horizontal,
+            children: pages,
+          ),
+          Positioned(
+            bottom: 40,
+            right: 25,
+            child: IconButton.filled(
+              onPressed: goToNextPage,
+              color: Theme.of(context).primaryColor,
+              icon: Icon(
+                Icons.arrow_forward_rounded,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          controller.page != controller.initialPage
+              ? Positioned(
+                  bottom: 40,
+                  left: 25,
+                  child: IconButton.outlined(
+                    onPressed: goToPreviousPage,
+                    color: Colors.white,
+                    icon: Icon(
+                      Icons.arrow_back_rounded,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                )
+              : Container()
+        ],
       ),
     );
   }

@@ -8,39 +8,62 @@ class PageOne extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Image.asset(
-          imageAssetName,
-          height: deviceHeight(context) * 0.4,
-          width: deviceWidth(context),
-          fit: BoxFit.cover,
-        ),
+   
 
-        // todo: Rich Text with differing cooloring
-        RichText(
-          text: TextSpan(
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: Theme.of(context).textTheme.headlineMedium!.fontSize,
-            ),
-            text: "Lorem ",
-            children: [
-              TextSpan(
-                text: "Ipsum Is Simply",
-                style: TextStyle(color: Theme.of(context).primaryColor),
-              ),
-              TextSpan(text: "dummy text printing")
-            ],
+    return SizedBox(
+      height: deviceHeight(context),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.asset(
+            imageAssetName,
+            height: deviceHeight(context) * 0.4,
+            width: deviceWidth(context),
+            fit: BoxFit.cover,
           ),
-        ),
-
-        Text(
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          style: TextStyle(color: Colors.grey),
-        ),
-      ],
+    
+          const SizedBox(height: 20),
+    
+          // todo: Rich Text with differing cooloring
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: Column(
+                children: [
+                  RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: Theme.of(context)
+                            .textTheme
+                            .headlineMedium!
+                            .fontSize,
+                        color: Colors.black87,
+                      ),
+                      text: "Lorem ",
+                      children: [
+                        TextSpan(
+                          text: "Ipsum is simply ",
+                          style: TextStyle(
+                              color: Theme.of(context).primaryColor),
+                        ),
+                        TextSpan(text: "dummy text printing")
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                    style: TextStyle(color: Colors.grey),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -36,6 +36,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF2F60E3)),
+        
         textTheme: GoogleFonts.poppinsTextTheme(),
         useMaterial3: true,
       ),
