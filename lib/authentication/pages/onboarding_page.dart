@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:real_estate_test/authentication/pages/onboarding_pages/page_one.dart';
+import 'package:real_estate_test/global/constants.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
@@ -11,32 +13,36 @@ class OnboardingPage extends StatefulWidget {
 class _OnboardingPageState extends State<OnboardingPage> {
   // page controller
   final PageController controller = PageController(initialPage: 0);
+
+  int pageTrackerInt = 0;
   final List<Widget> pages = [
     PageOne(imageAssetName: "assets/friends_flat_illustration.png"),
     PageOne(imageAssetName: "assets/login_flat_illustration.png"),
     PageOne(imageAssetName: "assets/self_learning_flat_illustration.png")
   ];
 
+  void goToLogin() {
+    Navigator.pushNamed(context, "/login");
+  }
+
   void goToNextPage() {
     controller.nextPage(
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 500),
       curve: Curves.linear,
     );
-    if (mounted) {
-      setState(() {});
-    }
-    print(controller.page);
+    setState(() {
+      pageTrackerInt = controller.page!.toInt();
+    });
   }
 
   void goToPreviousPage() {
     controller.previousPage(
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 500),
       curve: Curves.linear,
     );
-    if (mounted) {
-      setState(() {});
-    }
-    print(controller.page);
+    setState(() {
+      pageTrackerInt = controller.page!.toInt();
+    });
   }
 
   @override
@@ -58,31 +64,67 @@ class _OnboardingPageState extends State<OnboardingPage> {
             children: pages,
           ),
           Positioned(
-            bottom: 40,
-            right: 25,
-            child: IconButton.filled(
-              onPressed: goToNextPage,
-              color: Theme.of(context).primaryColor,
-              icon: Icon(
-                Icons.arrow_forward_rounded,
-                color: Colors.white,
+            bottom: 50,
+            child: SizedBox(
+              width: deviceWidth(context),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // todo: previous button
+
+                  // todo: page indicator
+                  SmoothPageIndicator(
+                    controller: controller,
+                    count: pages.length,
+                    effect: ExpandingDotsEffect(
+                      activeDotColor: Theme.of(context).primaryColor,
+                      dotColor: Colors.grey[300]!,
+                      dotHeight: 10,
+                      dotWidth: 10,
+                    ),
+                  ),
+
+                  // todo: next button
+                ],
               ),
             ),
           ),
-          controller.page != controller.initialPage
-              ? Positioned(
-                  bottom: 40,
-                  left: 25,
-                  child: IconButton.outlined(
-                    onPressed: goToPreviousPage,
-                    color: Colors.white,
-                    icon: Icon(
-                      Icons.arrow_back_rounded,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                )
-              : Container()
+
+          // todo: skip to auth pages
+          Positioned(
+            bottom: 15,
+            right: 15,
+            child: TextButton(
+              onPressed: goToLogin,
+              child: const Text("Skip"),
+            ),
+          ),
+          // Positioned(
+          //   bottom: 40,
+          //   right: 25,
+          //   child: IconButton.filled(
+          //     onPressed: goToNextPage,
+          //     color: Theme.of(context).primaryColor,
+          //     icon: Icon(
+          //       Icons.arrow_forward_rounded,
+          //       color: Colors.white,
+          //     ),
+          //   ),
+          // ),
+          // pageTrackerInt == 0
+          //     ? Positioned(
+          //         bottom: 40,
+          //         left: 25,
+          //         child: IconButton.outlined(
+          //           onPressed: goToPreviousPage,
+          //           color: Colors.white,
+          //           icon: Icon(
+          //             Icons.arrow_back_rounded,
+          //             color: Theme.of(context).primaryColor,
+          //           ),
+          //         ),
+          //       )
+          //     : Container()
         ],
       ),
     );
