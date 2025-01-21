@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "831420872471",
+    "project_id": "feature-testing-99889",
+    "storage_bucket": "feature-testing-99889.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:831420872471:android:fe6d0501df4df3ab93a952",
+        "android_client_info": {
+          "package_name": "com.example.real_estate_test"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBb6SP4iX7iqiUd0GKKOR59jRWJEJoodzA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

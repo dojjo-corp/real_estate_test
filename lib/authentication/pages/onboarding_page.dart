@@ -16,9 +16,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   int pageTrackerInt = 0;
   final List<Widget> pages = [
-    PageOne(imageAssetName: "assets/flat_illustration_1"),
-    PageOne(imageAssetName: "assets/flat_illustration_2"),
-    PageOne(imageAssetName: "assets/flat_illustration_3")
+    PageOne(imageAssetName: "assets/flat_illustration_1.jpg"),
+    PageOne(imageAssetName: "assets/flat_illustration_2.jpg"),
+    PageOne(imageAssetName: "assets/flat_illustration_3.jpg")
   ];
 
   void goToLogin() {

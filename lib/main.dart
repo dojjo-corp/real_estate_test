@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:real_estate_test/authentication/gates/auth_gate.dart';
 import 'package:real_estate_test/authentication/pages/my_bookings_page.dart';
 import 'package:real_estate_test/authentication/pages/notifications_page.dart';
@@ -20,9 +21,23 @@ import 'package:real_estate_test/authentication/pages/property/property_review_p
 import 'package:real_estate_test/authentication/pages/user_authentication/register_page.dart';
 import 'package:real_estate_test/authentication/pages/search_map.dart';
 import 'package:real_estate_test/authentication/pages/swipe_page.dart';
+import 'package:real_estate_test/authentication/provider/auth_provider.dart';
+import 'package:real_estate_test/authentication/provider/connecton_provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => AuthProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ConnectionProvider(),
+        )
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -36,7 +51,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF2F60E3)),
-        
         textTheme: GoogleFonts.poppinsTextTheme(),
         useMaterial3: true,
       ),
@@ -54,7 +68,6 @@ class MyApp extends StatelessWidget {
         "/notifications": (context) => const NotificationsPage(),
         "/my-bookings": (context) => const MyBookingsPage(),
         "/add-card": (context) => const AddCardPage(),
-
       },
       onGenerateRoute: (settings) {
         final name = settings.name;
@@ -79,44 +92,39 @@ class MyApp extends StatelessWidget {
         // todo: Agent Review
         if (name == "/agent-review") {
           return MaterialPageRoute(
-            builder: (context) =>
-                AgentReviewPage(agentID: args["agent-id"]),
+            builder: (context) => AgentReviewPage(agentID: args["agent-id"]),
           );
         }
 
         // todo: Property Booking
         if (name == "/booking") {
           return MaterialPageRoute(
-            builder: (context) =>
-                BookingPage(propertyID: args["property-id"]),
+            builder: (context) => BookingPage(propertyID: args["property-id"]),
           );
         }
 
         // todo: Book Tour
         if (name == "/book-tour") {
           return MaterialPageRoute(
-            builder: (context) =>
-                BookTourPage(propertyID: args["property-id"]),
+            builder: (context) => BookTourPage(propertyID: args["property-id"]),
           );
         }
 
         // todo: Payment
         if (name == "/payment") {
           return MaterialPageRoute(
-            builder: (context) =>
-                PaymentPage(propertyID: args["property-id"]),
+            builder: (context) => PaymentPage(propertyID: args["property-id"]),
           );
         }
 
         // todo: E-Receipt
         if (name == "/e-receipt") {
           return MaterialPageRoute(
-            builder: (context) =>
-                EReceiptPage(receiptID: args["receipt-id"]),
+            builder: (context) => EReceiptPage(receiptID: args["receipt-id"]),
           );
         }
 
-        // todo: rdirect to homepage 
+        // todo: rdirect to homepage
         return MaterialPageRoute(
           builder: (context) => const MyHomePage(),
         );
