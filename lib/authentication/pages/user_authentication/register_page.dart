@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:real_estate_test/authentication/components/logo.dart';
+import 'package:real_estate_test/authentication/components/password_text_field.dart';
 import 'package:real_estate_test/global/constants.dart';
 import 'package:real_estate_test/global/helper_methods.dart';
 
@@ -11,23 +12,22 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final key = GlobalKey<FormState>(); 
+  final key = GlobalKey<FormState>();
   late final TextEditingController emailController;
   late final TextEditingController passwordController;
   late final TextEditingController confirmPasswordController;
   bool isLoading = false;
   bool obscureText = true;
+  bool obscureConfirmText = true;
 
   Future<void> register(BuildContext context) async {
     try {
-      if (key.currentState!.validate()){
+      if (key.currentState!.validate()) {
         key.currentState!.save();
 
         setState(() {
           isLoading = true;
         });
-
-        
       }
     } catch (e) {
       if (mounted) {
@@ -138,12 +138,25 @@ class _RegisterPageState extends State<RegisterPage> {
                     style: TextStyle(color: Theme.of(context).primaryColor),
                   ),
                   const SizedBox(height: 10),
-                  TextFormField(
+                  PasswordTextField(
                     controller: passwordController,
-                    maxLines: 1,
                     obscureText: obscureText,
+                  ),
+
+                  const SizedBox(height: 30),
+
+                  // todo: password textfield
+                  Text(
+                    "Confirm Password",
+                    style: TextStyle(color: Theme.of(context).primaryColor),
+                  ),
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    controller: confirmPasswordController,
+                    maxLines: 1,
+                    obscureText: obscureConfirmText,
                     decoration: InputDecoration(
-                      hintText: "Password",
+                      hintText: "Confirm Password",
                       hintStyle: const TextStyle(color: Colors.grey),
                       prefixIcon: Icon(
                         Icons.lock_outline_rounded,
@@ -152,11 +165,13 @@ class _RegisterPageState extends State<RegisterPage> {
                       suffixIcon: GestureDetector(
                         onTap: () {
                           setState(() {
-                            obscureText = !obscureText;
+                            obscureConfirmText = !obscureConfirmText;
                           });
                         },
                         child: Icon(
-                          obscureText ? Icons.visibility : Icons.visibility_off,
+                          obscureConfirmText
+                              ? Icons.visibility
+                              : Icons.visibility_off,
                           color: Colors.grey,
                         ),
                       ),
@@ -184,8 +199,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
 
-                  const SizedBox(height: 30),
-
                   // todo: sign in button
                   ElevatedButton(
                     onPressed: () {
@@ -194,8 +207,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 45),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)
-                      ),
+                          borderRadius: BorderRadius.circular(12)),
                       backgroundColor: Theme.of(context).primaryColor,
                       foregroundColor: Colors.white,
                     ),
