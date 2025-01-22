@@ -21,13 +21,14 @@ class _LoginPageState extends State<LoginPage> {
   // bool isLoading
 
   Future<void> login(BuildContext context) async {
-    setState(() {
-      isLoading = true;
-    });
+    
 
     try {
       if (key.currentState!.validate()) {
         key.currentState!.save();
+
+        // todo: start loading visual
+        
 
         // todo: validate user credentials
         Provider.of<AuthProvider>(context, listen: false).login(
@@ -199,7 +200,9 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 45),
-                      
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12)
+                      ),
                       backgroundColor: Theme.of(context).primaryColor,
                       foregroundColor: Colors.white,
                     ),
