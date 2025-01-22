@@ -62,18 +62,47 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 15.0,
-              vertical: kToolbarHeight,
+              // vertical: kToolbarHeight,
             ),
             child: Form(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
+                // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // todo: logo
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+
+                  Stack(
                     children: [
-                      Logo(),
+                      ShaderMask(
+                        shaderCallback: (Rect bounds) {
+                          return LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.transparent,
+                              Colors.black.withValues(alpha: 0.8)
+                            ],
+                          ).createShader(bounds);
+                        },
+                        blendMode: BlendMode.dstIn,
+                        child: Image.asset(
+                          'assets/registration_flat_illustration.jpg',
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: deviceHeight(context) * 0.3,
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 20,
+                        child: SizedBox(
+                          width: deviceWidth(context),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Logo(),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
 
