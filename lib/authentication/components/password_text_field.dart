@@ -55,6 +55,14 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
           ),
         ),
       ),
+      validator: (String? value) {
+        if (value!.isEmpty) {
+          return "Field cannot be empty";
+        } else if (value.characters.length < 6) {
+          return "Passwords cannot be less than 6 characters";
+        }
+        return null;
+      },
     );
   }
 }

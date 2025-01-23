@@ -12,10 +12,10 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> register(
+  Future<UserCredential> register(
       {required String email, required String password}) async {
     try {
-      await auth.createUserWithEmailAndPassword(
+      return await auth.createUserWithEmailAndPassword(
           email: email, password: password);
     } catch (e) {
       rethrow;

@@ -28,14 +28,16 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> login(BuildContext context) async {
-    try {
-      if (key.currentState!.validate()) {
-        key.currentState!.save();
+    if (key.currentState!.validate()) {
+      key.currentState!.save();
 
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+      try {
         // todo: start loading visual
 
         // todo: validate user credentials
-        Provider.of<AuthProvider>(context, listen: false).login(
+        authProvider.login(
           email: emailController.text,
           password: passwordController.text.trim(),
         );
@@ -44,15 +46,15 @@ class _LoginPageState extends State<LoginPage> {
         if (mounted) {
           Navigator.pushNamed(context, "/home");
         }
-      }
-    } catch (e) {
-      if (mounted) {
-        showSnackBar(context, message: e.toString());
-      }
-    } finally {
-      setState(() {
-        isLoading = false;
-      });
+      } catch (e) {
+        if (mounted) {
+          showSnackBar(
+            context,
+            message: e.toString(),
+            alertType: AlertType.error,
+          );
+        }
+      } finally {}
     }
   }
 
@@ -76,6 +78,7 @@ class _LoginPageState extends State<LoginPage> {
               // vertical: kToolbarHeight,
             ),
             child: Form(
+              key: key,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 // mainAxisAlignment: MainAxisAlignment.center,
@@ -99,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                           'assets/login_flat_illustration.jpg',
                           fit: BoxFit.cover,
                           width: double.infinity,
-                          height: deviceHeight(context) * 0.4,
+                          height: deviceHeight(context) * 0.3,
                         ),
                       ),
                     ],

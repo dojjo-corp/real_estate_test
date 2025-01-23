@@ -47,6 +47,12 @@ class _SimpleTextFieldState extends State<SimpleTextField> {
           ),
         ),
       ),
+      validator: (String? value) {
+        if (value!.isEmpty) {
+          return "Field cannot be empty";
+        }
+        return null;
+      },
     );
   }
 }
