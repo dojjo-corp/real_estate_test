@@ -102,18 +102,12 @@ class _LoginPageState extends State<LoginPage> {
                           height: deviceHeight(context) * 0.4,
                         ),
                       ),
-                      Positioned(
-                        bottom: 10,
-                        child: SizedBox(
-                          width: deviceWidth(context),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Logo(),
-                            ],
-                          ),
-                        ),
-                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Logo(),
                     ],
                   ),
 
@@ -173,6 +167,25 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
           ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 15.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("Don't have an account? "),
+            GestureDetector(
+              onTap: goToRegisterPage,
+              child: Text(
+                "Register",
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );

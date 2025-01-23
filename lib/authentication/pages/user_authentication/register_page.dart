@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:real_estate_test/authentication/components/confirm_password_text_field.dart';
 import 'package:real_estate_test/authentication/components/logo.dart';
+import 'package:real_estate_test/authentication/components/my_button.dart';
 import 'package:real_estate_test/authentication/components/password_text_field.dart';
+import 'package:real_estate_test/authentication/components/simple_text_field.dart';
 import 'package:real_estate_test/global/constants.dart';
 import 'package:real_estate_test/global/helper_methods.dart';
 
@@ -21,19 +24,24 @@ class _RegisterPageState extends State<RegisterPage> {
   bool obscureConfirmText = true;
 
   Future<void> register(BuildContext context) async {
+    showLoadingDialog(context);
+
+    // Future.delayed(Duration(seconds: 3));
+
+    // Navigator.pop(context);
     try {
       if (key.currentState!.validate()) {
         key.currentState!.save();
-
-        setState(() {
-          isLoading = true;
-        });
       }
     } catch (e) {
       if (mounted) {
         showSnackBar(context, message: e.toString());
       }
     }
+  }
+
+  void goToLoginPage() {
+    Navigator.pushNamed(context, "/login");
   }
 
   @override
@@ -65,11 +73,11 @@ class _RegisterPageState extends State<RegisterPage> {
               // vertical: kToolbarHeight,
             ),
             child: Form(
+              key: key,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-
                   Stack(
                     children: [
                       ShaderMask(
@@ -91,18 +99,12 @@ class _RegisterPageState extends State<RegisterPage> {
                           height: deviceHeight(context) * 0.3,
                         ),
                       ),
-                      Positioned(
-                        bottom: 20,
-                        child: SizedBox(
-                          width: deviceWidth(context),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Logo(),
-                            ],
-                          ),
-                        ),
-                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Logo(),
                     ],
                   ),
 
@@ -122,40 +124,13 @@ class _RegisterPageState extends State<RegisterPage> {
                     "Email",
                     style: TextStyle(color: Theme.of(context).primaryColor),
                   ),
-
                   const SizedBox(height: 10),
-
-                  TextFormField(
+                  SimpleTextField(
                     controller: emailController,
-                    maxLines: 1,
-                    decoration: InputDecoration(
-                      hintText: "Email",
-                      hintStyle: const TextStyle(color: Colors.grey),
-                      prefixIcon: Icon(
-                        Icons.person_outline_rounded,
-                        color: Colors.grey,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(
-                          color: Colors.grey[50]!,
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(
-                          color: Colors.grey[300]!,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(
-                          color: Theme.of(context)
-                              .primaryColor
-                              .withValues(alpha: 0.6),
-                          width: 2,
-                        ),
-                      ),
+                    hintText: "Email",
+                    prefixIcon: Icon(
+                      Icons.email_outlined,
+                      color: Colors.grey,
                     ),
                   ),
 
@@ -172,7 +147,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     obscureText: obscureText,
                   ),
 
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 10),
 
                   // todo: password textfield
                   Text(
@@ -180,70 +155,19 @@ class _RegisterPageState extends State<RegisterPage> {
                     style: TextStyle(color: Theme.of(context).primaryColor),
                   ),
                   const SizedBox(height: 10),
-                  TextFormField(
+                  ConfirmPasswordTextField(
                     controller: confirmPasswordController,
-                    maxLines: 1,
+                    hintText: "Confirm password",
                     obscureText: obscureConfirmText,
-                    decoration: InputDecoration(
-                      hintText: "Confirm Password",
-                      hintStyle: const TextStyle(color: Colors.grey),
-                      prefixIcon: Icon(
-                        Icons.lock_outline_rounded,
-                        color: Colors.grey,
-                      ),
-                      suffixIcon: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            obscureConfirmText = !obscureConfirmText;
-                          });
-                        },
-                        child: Icon(
-                          obscureConfirmText
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(
-                          color: Colors.grey[50]!,
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(
-                          color: Colors.grey[300]!,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(
-                          color: Theme.of(context)
-                              .primaryColor
-                              .withValues(alpha: 0.6),
-                          width: 2,
-                        ),
-                      ),
-                    ),
                   ),
+                  const SizedBox(height: 30),
 
                   // todo: sign in button
-                  ElevatedButton(
+                  MyButton(
                     onPressed: () {
                       register(context);
                     },
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(double.infinity, 45),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12)),
-                      backgroundColor: Theme.of(context).primaryColor,
-                      foregroundColor: Colors.white,
-                    ),
-                    child: const Text(
-                      "Sign in",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
+                    btnText: "Register",
                   ),
 
                   // todo: oauth sign in options
@@ -251,6 +175,25 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
           ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 15.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("Already have an account? "),
+            GestureDetector(
+              onTap: goToLoginPage,
+              child: Text(
+                "Login",
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );

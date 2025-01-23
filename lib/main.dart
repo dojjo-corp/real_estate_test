@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -23,8 +24,11 @@ import 'package:real_estate_test/authentication/pages/search_map.dart';
 import 'package:real_estate_test/authentication/pages/swipe_page.dart';
 import 'package:real_estate_test/authentication/provider/auth_provider.dart';
 import 'package:real_estate_test/authentication/provider/connecton_provider.dart';
+import 'package:real_estate_test/firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
     MultiProvider(
       providers: [
@@ -50,7 +54,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF2F60E3)),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Color(0xFF2F60E3),
+        ),
         textTheme: GoogleFonts.poppinsTextTheme(),
         useMaterial3: true,
       ),

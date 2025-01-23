@@ -1,8 +1,8 @@
 import 'dart:math';
-import 'dart:developer'
-;
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:real_estate_test/authentication/pages/user_authentication/login_page.dart';
+import 'package:real_estate_test/authentication/pages/homepage.dart';
 import 'package:real_estate_test/authentication/pages/onboarding_page.dart';
 
 class AuthGate extends StatelessWidget {
@@ -15,17 +15,12 @@ class AuthGate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: Stream.value(1),
+        stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
-          // stream is loading
-           print("The number is ${snapshot.data}");
-
-          if (snapshot.hasData && snapshot.data!.isEven) {
-           
-            return LoginPage();
-          } else {
-            return OnboardingPage();
+          if (snapshot.hasData) {
+            return MyHomePage();
           }
+          return OnboardingPage();
         });
   }
 }
